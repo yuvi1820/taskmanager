@@ -8,7 +8,7 @@ RUN mvn clean package
 
 FROM tomcat:9.0-jdk17
 
-COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/taskmanager.war
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 
