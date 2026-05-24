@@ -109,6 +109,14 @@ public final class DatabaseUtil {
             try {
                 stmt.execute("ALTER TABLE users ADD COLUMN status VARCHAR(20) DEFAULT 'active'");
             } catch (SQLException ignored) { }
+
+            try {
+                stmt.execute("ALTER TABLE users ADD COLUMN otp VARCHAR(10)");
+            } catch (SQLException ignored) { }
+
+            try {
+                stmt.execute("ALTER TABLE users ADD COLUMN otp_expiry TIMESTAMP NULL");
+            } catch (SQLException ignored) { }
         } catch (SQLException e) {
             throw new RuntimeException(
                     "Failed to connect to MySQL. Create the database first (see sql/schema.sql): "
