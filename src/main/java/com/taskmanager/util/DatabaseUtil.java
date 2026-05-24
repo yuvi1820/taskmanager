@@ -77,7 +77,8 @@ public final class DatabaseUtil {
                     email VARCHAR(100),
                     password_hash VARCHAR(64) NOT NULL,
                     full_name VARCHAR(100) NOT NULL,
-                    role VARCHAR(20) NOT NULL CHECK (role IN ('manager', 'employee')),
+                    role VARCHAR(20) NOT NULL,
+                    status VARCHAR(20) DEFAULT 'active',
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
                 """);
@@ -103,6 +104,10 @@ public final class DatabaseUtil {
 
             try {
                 stmt.execute("ALTER TABLE users ADD COLUMN email VARCHAR(100)");
+            } catch (SQLException ignored) { }
+
+            try {
+                stmt.execute("ALTER TABLE users ADD COLUMN status VARCHAR(20) DEFAULT 'active'");
             } catch (SQLException ignored) { }
         } catch (SQLException e) {
             throw new RuntimeException(
