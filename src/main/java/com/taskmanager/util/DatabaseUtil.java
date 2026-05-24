@@ -74,6 +74,7 @@ public final class DatabaseUtil {
                 CREATE TABLE IF NOT EXISTS users (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     username VARCHAR(50) NOT NULL UNIQUE,
+                    email VARCHAR(100),
                     password_hash VARCHAR(64) NOT NULL,
                     full_name VARCHAR(100) NOT NULL,
                     role VARCHAR(20) NOT NULL CHECK (role IN ('manager', 'employee')),
@@ -99,6 +100,10 @@ public final class DatabaseUtil {
                 """);
 
             migrateTasksTable(stmt);
+
+            try {
+                stmt.execute("ALTER TABLE users ADD COLUMN email VARCHAR(100)");
+            } catch (SQLException ignored) { }
         } catch (SQLException e) {
             throw new RuntimeException(
                     "Failed to connect to MySQL. Create the database first (see sql/schema.sql): "
