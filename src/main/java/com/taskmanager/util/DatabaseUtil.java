@@ -100,6 +100,17 @@ public final class DatabaseUtil {
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
                 """);
 
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS task_assignments (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    task_id INT NOT NULL,
+                    employee_id INT NOT NULL,
+                    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE,
+                    FOREIGN KEY (employee_id) REFERENCES users(id) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+                """);
+
             migrateTasksTable(stmt);
 
             try {
