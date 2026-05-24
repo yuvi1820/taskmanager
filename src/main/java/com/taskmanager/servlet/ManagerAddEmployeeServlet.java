@@ -61,6 +61,7 @@ public class ManagerAddEmployeeServlet extends HttpServlet {
             try {
                 handleCheckEmail(request, response);
             } catch (SQLException e) {
+                e.printStackTrace();
                 throw new ServletException("Database error", e);
             }
             return;
@@ -70,6 +71,7 @@ public class ManagerAddEmployeeServlet extends HttpServlet {
             try {
                 handleVerifyEmailOTP(request, response);
             } catch (SQLException e) {
+                e.printStackTrace();
                 throw new ServletException("Database error", e);
             }
             return;
@@ -124,6 +126,7 @@ public class ManagerAddEmployeeServlet extends HttpServlet {
 
             response.sendRedirect(request.getContextPath() + "/manager/tasks?employeeAdded=1");
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new ServletException("Database error", e);
         }
     }
@@ -148,6 +151,7 @@ public class ManagerAddEmployeeServlet extends HttpServlet {
             request.setAttribute("email", email);
             request.getRequestDispatcher("/WEB-INF/jsp/manager/add-employee.jsp").forward(request, response);
         } catch (MessagingException e) {
+            e.printStackTrace();
             request.setAttribute("error", "Failed to send OTP. Please check email configuration.");
             request.setAttribute("email", email);
             request.getRequestDispatcher("/WEB-INF/jsp/manager/add-employee.jsp").forward(request, response);
@@ -164,6 +168,7 @@ public class ManagerAddEmployeeServlet extends HttpServlet {
             boolean exists = userDAO.findByUsername(username) != null;
             response.getWriter().write("{\"available\": " + !exists + "}");
         } catch (SQLException e) {
+            e.printStackTrace();
             response.getWriter().write("{\"available\": false, \"error\": \"Database error\"}");
         }
     }
