@@ -115,7 +115,7 @@ public final class DatabaseUtil {
             } catch (SQLException ignored) { }
 
             try {
-                stmt.execute("ALTER TABLE users ADD COLUMN otp_expiry TIMESTAMP NULL");
+                stmt.execute("ALTER TABLE users ADD COLUMN otp_expiration TIMESTAMP NULL");
             } catch (SQLException ignored) { }
         } catch (SQLException e) {
             throw new RuntimeException(
